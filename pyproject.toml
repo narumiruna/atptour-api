@@ -6,7 +6,8 @@ readme          = "README.md"
 requires-python = ">=3.12"
 authors         = [{ name = "narumi", email = "toucans-cutouts0f@icloud.com" }]
 dependencies    = [
-  "typer>=0.24.1",
+  "curl-cffi>=0.15.0",
+  "typer>=0.25.1",
 ]
 
 [project.scripts]
@@ -16,8 +17,8 @@ atptour = "atptour.cli:app"
 dev = [
   "pytest>=9.0.3",
   "pytest-cov>=7.1.0",
-  "ruff>=0.15.9",
-  "ty>=0.0.29",
+  "ruff>=0.15.12",
+  "ty>=0.0.35",
 ]
 
 [build-system]
