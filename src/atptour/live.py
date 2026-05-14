@@ -17,10 +17,26 @@ from atptour.models import Tournament
 ScoringTournamentLevel = Literal["tour", "challenger"]
 
 LIVE_MATCHES_URL = "https://app.atptour.com/api/v2/gateway/livematches/website"
+DEFAULT_TIMEOUT_SECONDS = 30.0
+
+_session: requests.Session | None = None
 
 
-def fetch_live_matches(level: ScoringTournamentLevel = "tour") -> LiveMatchesResponse:
-    response = requests.get(
+def get_session() -> requests.Session:
+    global _session
+    if _session is None:
+        _session = requests.Session()
+    return _session
+
+
+def fetch_live_matches(
+    level: ScoringTournamentLevel = "tour",
+    *,
+    timeout: float = DEFAULT_TIMEOUT_SECONDS,
+    session: requests.Session | None = None,
+) -> LiveMatchesResponse:
+    client = session or get_session()
+    response = client.get(
         LIVE_MATCHES_URL,
         params={"scoringTournamentLevel": level},
         impersonate="chrome",
@@ -29,7 +45,7 @@ def fetch_live_matches(level: ScoringTournamentLevel = "tour") -> LiveMatchesRes
             "origin": "https://www.atptour.com",
             "referer": "https://www.atptour.com/",
         },
-        timeout=30,
+        timeout=timeout,
     )
     response.raise_for_status()
     return LiveMatchesResponse.model_validate(response.json())

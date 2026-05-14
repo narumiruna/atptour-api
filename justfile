@@ -9,6 +9,10 @@ tour-once:
 challenger-once:
     uv run atptour --level challenger --once
 
+# Fetch ATP Tour and Challenger live matches once and print terminal summaries
+all-once:
+    uv run atptour --level all --once
+
 # Watch ATP Tour live matches, polling every 15 seconds
 watch-tour:
     uv run atptour --level tour
@@ -16,6 +20,10 @@ watch-tour:
 # Watch ATP Challenger live matches, polling every 15 seconds
 watch-challenger:
     uv run atptour --level challenger
+
+# Watch ATP Tour and Challenger live matches, polling every 15 seconds
+watch-all:
+    uv run atptour --level all
 
 # Format code using ruff
 format:
